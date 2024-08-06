@@ -11,6 +11,7 @@ import MemeOfTheDay from "./pages/MemeOfTheDay";
 import Settings from "./pages/Settings";
 import Dictionary from "./pages/Dictionary";
 import UpdateProfile from "./pages/UpdateProfile";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   const { auth } = useAuth();
@@ -22,13 +23,22 @@ function App() {
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<Login />} />
         <Route path="update-profile" element={<UpdateProfile />} />
-        <Route path="dashboard" element={<Dashboard />}>
-          <Route index element={<Navigate replace to="learn" />} />
+        <Route>
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate replace to="learn" />} />
 
-          <Route path="learn" element={<Learn />} />
-          <Route path="mod" element={<MemeOfTheDay />} />
-          <Route path="dictionary" element={<Dictionary />} />
-          <Route path="settings" element={<Settings />} />
+            <Route path="learn" element={<Learn />} />
+            <Route path="mod" element={<MemeOfTheDay />} />
+            <Route path="dictionary" element={<Dictionary />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<PageNotFound />} />

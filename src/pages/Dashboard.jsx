@@ -5,20 +5,31 @@ import { useAuth } from "../firebase/auth";
 import { getAuth, signOut } from "firebase/auth";
 import useUpdateProfile from "../hooks/UpdateProfileLogic";
 import Button from "../components/Button";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../firebase/firebase.config";
 
 function Dashboard() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const navigate = useNavigate();
   const { isLoading } = useAuth();
   const { username, setUsername, isSubmitting, setSelectedFile, handleSubmit } =
     useUpdateProfile();
-  const navigate = useNavigate();
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
 
+  //Retrieve Profile Picture
   useEffect(() => {
-    if (!isLoading && !user) {
-      navigate("/"); // Redirect to home if not logged in
+    if (user && user.photoURL) {
+      const photoRef = ref(storage, user.photoURL);
+      getDownloadURL(photoRef)
+        .then((url) => {
+          setProfilePicUrl(url);
+        })
+        .catch((error) => {
+          console.error("Error fetching profile picture URL", error);
+        });
     }
-  }, [isLoading, user, navigate]);
+  }, [user]);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -34,13 +45,19 @@ function Dashboard() {
   if (isLoading) {
     return <p>Loading...</p>;
   }
-
   return (
     //Render form to update information in case there is not username
     <section>
-      {user.displayName != null ? (
+      {user?.displayName != null ? (
         <>
           <p>Welcome {user.displayName}</p>
+          {profilePicUrl && (
+            <img
+              src={profilePicUrl}
+              alt="profile picture"
+              style={{ width: "50px", height: "auto", borderRadius: "360%" }}
+            />
+          )}
           <PageNavigation />
           <Outlet />
           <button onClick={handleSignOut}>Sign Out</button>

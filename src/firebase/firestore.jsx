@@ -7,6 +7,8 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentSnapshot,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -14,4 +16,15 @@ import {
   where,
 } from "firebase/firestore";
 
-export function addWord() {}
+export async function getWords() {
+  const getWords = query(collection(db, NyanjaToEnglishCollection));
+  const querySnapshot = getDocs(getWords);
+  let allWords = [];
+  for (const documentSnapshot of querySnapshot.docs) {
+    const word = documentSnapshot.data();
+    await allWords.push({
+      ...word,
+      id: documentSnapshot.id,
+    });
+  }
+}

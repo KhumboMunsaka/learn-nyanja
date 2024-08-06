@@ -27,7 +27,6 @@ function useUpdateProfile() {
   const handleUsernameChange = (name) => {
     setUsername(name);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
