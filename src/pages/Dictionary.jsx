@@ -4,6 +4,8 @@ import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 import SavedWords from "../components/SavedWords";
 import { getAuth } from "firebase/auth";
 import Spinner from "../components/Spinner";
+import WordList from "../components/WordList";
+import ExpandedWord from "../components/ExpandedWord";
 
 function Dictionary() {
   const [allWords, setAllWords] = useState([]); // Store all words here
@@ -68,35 +70,15 @@ function Dictionary() {
         onFocus={() => setGetMeaning(false)}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      {loading ? <Spinner /> : null}
+
       {!getMeaning ? (
-        <div>
-          <div>
-            <h2>Words</h2>
-            <ul style={{ height: "150px", overflowY: "scroll" }}>
-              {filteredWords.map((word, index) => (
-                <li key={index} onClick={() => expandWord(word)}>
-                  {" "}
-                  - {word.word}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <WordList filteredWords={filteredWords} expandWord={expandWord} />
       ) : (
-        <div>
-          {selectedWord?.word}
-          {selectedWord?.meanings.map((meaning, index) => (
-            <p key={index}>
-              {" "}
-              {index + 1}. {meaning.translation}
-            </p>
-          ))}
-          <button onClick={() => handleSave(selectedWord)}>
-            Save This Word
-          </button>
-          <button onClick={() => setGetMeaning(false)}>Back</button>
-        </div>
+        <ExpandedWord
+          handleSave={handleSave}
+          selectedWord={selectedWord}
+          setGetMeaning={setGetMeaning}
+        />
       )}
 
       <SavedWords onHandleExpand={expandWord} />
