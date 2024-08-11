@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase.config";
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 import SavedWords from "../components/SavedWords";
+import { getAuth } from "firebase/auth";
+import Spinner from "../components/Spinner";
 
 function Dictionary() {
   const [allWords, setAllWords] = useState([]); // Store all words here
@@ -10,37 +12,55 @@ function Dictionary() {
   const [savedWords, setSavedWords] = useState([]);
   const [selectedWord, setSelectedWord] = useState(null);
   const [getMeaning, setGetMeaning] = useState(false);
-  const getWords = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "Nyanja to English"));
-      const words = [];
-      querySnapshot.forEach((doc) => {
-        words.push(doc.data());
-      });
-      setAllWords(words); // Store all words
-      setFilteredWords(words); // Initially set filteredWords to all words
-    } catch (error) {
-      console.error("Error fetching documents: ", error);
-    }
-  };
+  const [loading, isLoading] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
 
+  //To get the words for the first time
+  useEffect(function () {
+    const getWords = async () => {
+      try {
+        isLoading(true);
+        const querySnapshot = await getDocs(
+          collection(db, "Nyanja to English")
+        );
+        const words = [];
+        querySnapshot.forEach((doc) => {
+          words.push(doc.data());
+        });
+        setAllWords(words); // Store all words
+        setFilteredWords(words); // Initially set filteredWords to all words
+        isLoading(false);
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+        isLoading(false);
+      }
+    };
+    isLoading(false);
+
+    getWords();
+  }, []);
+  // Filter words whenever searchQuery changes
   useEffect(() => {
-    // Filter words whenever searchQuery changes
     const newFilteredWords = allWords.filter((word) =>
       word.word.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredWords(newFilteredWords);
   }, [searchQuery, allWords]);
 
-  function handleSave(word) {
+  async function handleSave(word) {
+    const savedWordsRef = await setDoc(doc(db, "user-faves", user.uid), {
+      words: [...savedWords, word],
+    });
     setSavedWords([...savedWords, word]);
   }
+
   function expandWord(word) {
     setGetMeaning(true);
     setSelectedWord(word);
   }
   return (
-    <>
+    <div>
       <label htmlFor="">search for words</label>
       <input
         type="text"
@@ -48,7 +68,7 @@ function Dictionary() {
         onFocus={() => setGetMeaning(false)}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button onClick={getWords}>Get Words</button>
+      {loading ? <Spinner /> : null}
       {!getMeaning ? (
         <div>
           <div>
@@ -79,8 +99,8 @@ function Dictionary() {
         </div>
       )}
 
-      <SavedWords savedWords={savedWords} />
-    </>
+      <SavedWords onHandleExpand={expandWord} />
+    </div>
   );
 }
 
