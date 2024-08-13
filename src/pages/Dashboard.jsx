@@ -60,7 +60,7 @@ function Dashboard() {
           )}
           <PageNavigation />
           <Outlet />
-          <button onClick={handleSignOut}>Sign Out</button>
+          <button onClick={handleSignOut}>Log Out 💨</button>
         </>
       ) : (
         <>
