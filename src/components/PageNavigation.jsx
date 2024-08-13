@@ -4,16 +4,16 @@ function PageNavigation() {
   return (
     <ul>
       <li>
-        <NavLink to="learn">Learn</NavLink>
+        <NavLink to="learn"> 🥸 Learn</NavLink>
       </li>
       <li>
-        <NavLink to="mod">MOD</NavLink>
+        <NavLink to="mod"> 💀 MOD</NavLink>
       </li>
       <li>
-        <NavLink to="dictionary">Dictionary</NavLink>
+        <NavLink to="dictionary"> 📖 Dictionary</NavLink>
       </li>
       <li>
-        <NavLink to="settings">Settings</NavLink>
+        <NavLink to="settings"> ⚙️ Settings</NavLink>
       </li>
     </ul>
   );

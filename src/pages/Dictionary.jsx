@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase.config";
-import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import SavedWords from "../components/SavedWords";
 import { getAuth } from "firebase/auth";
 import Spinner from "../components/Spinner";
@@ -42,6 +50,7 @@ function Dictionary() {
 
     getWords();
   }, []);
+
   // Filter words whenever searchQuery changes
   useEffect(() => {
     const newFilteredWords = allWords.filter((word) =>
@@ -50,6 +59,8 @@ function Dictionary() {
     setFilteredWords(newFilteredWords);
   }, [searchQuery, allWords]);
 
+  //to get the Saved words
+
   async function handleSave(word) {
     const savedWordsRef = await setDoc(doc(db, "user-faves", user.uid), {
       words: [...savedWords, word],
@@ -57,10 +68,40 @@ function Dictionary() {
     setSavedWords([...savedWords, word]);
   }
 
+  const docRef = doc(db, "user-faves", user.uid);
+
+  async function handleRemoveWord(indexPoint) {
+    const updatedWords = savedWords.filter((_, i) => i !== indexPoint);
+    setSavedWords(updatedWords);
+    // Update the Firestore document with the new array
+    const docRef = doc(db, "user-faves", user.uid);
+    await updateDoc(docRef, {
+      words: updatedWords,
+    });
+  }
+  // To get the saved words
+  useEffect(() => {
+    async function getSavedWords() {
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setSavedWords(docSnap.data().words); // Assuming words are stored as an array in the document
+        }
+      } catch (err) {
+        console.log(err.message);
+        console.log("No such document!");
+      }
+    }
+
+    if (user) {
+      getSavedWords();
+    }
+  }, [user]); // Only run when `user` changes (e.g., on login)
   function expandWord(word) {
     setGetMeaning(true);
     setSelectedWord(word);
   }
+
   return (
     <div>
       <label htmlFor="">search for words</label>
@@ -78,10 +119,15 @@ function Dictionary() {
           handleSave={handleSave}
           selectedWord={selectedWord}
           setGetMeaning={setGetMeaning}
+          userID={user.uid}
         />
       )}
 
-      <SavedWords onHandleExpand={expandWord} />
+      <SavedWords
+        onHandleExpand={expandWord}
+        savedWords={savedWords}
+        handleRemoveWord={handleRemoveWord}
+      />
     </div>
   );
 }
