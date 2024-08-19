@@ -41,11 +41,6 @@ function ExpandedWord({ selectedWord, handleSave, setGetMeaning }) {
       // Get the download URL
       getDownloadURL(audioRef)
         .then((url) => {
-          // const audio = document.createElement("audio");
-          // audio.src = url;
-          // audio.controls = true;
-          // document.body.appendChild(audio);
-          // console.log(audio);
           setAudioURL(url);
         })
         .catch((error) => {
