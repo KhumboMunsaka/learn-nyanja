@@ -12,7 +12,7 @@ import Settings from "./pages/Settings";
 import Dictionary from "./pages/Dictionary";
 import UpdateProfile from "./pages/UpdateProfile";
 import ProtectedRoute from "./pages/ProtectedRoute";
-
+import { DictionaryProvider } from "./contexts/DictionaryContext"; // Imp
 function App() {
   const { auth } = useAuth();
 
@@ -28,7 +28,9 @@ function App() {
             path="dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <DictionaryProvider>
+                  <Dashboard />
+                </DictionaryProvider>
               </ProtectedRoute>
             }
           >
