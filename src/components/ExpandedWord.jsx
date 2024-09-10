@@ -7,6 +7,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 function ExpandedWord({ selectedWord, handleSave, setGetMeaning }) {
   const [isAlreadySaved, setIsAlreadySaved] = useState(true);
   const [audioURL, setAudioURL] = useState(null);
+  //To get the user's saved words
   useEffect(() => {
     async function findSavedWords() {
       const auth = getAuth();

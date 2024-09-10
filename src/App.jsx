@@ -13,6 +13,7 @@ import Dictionary from "./pages/Dictionary";
 import UpdateProfile from "./pages/UpdateProfile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { DictionaryProvider } from "./contexts/DictionaryContext"; // Imp
+import { ModProvider } from "./contexts/MODContext";
 function App() {
   const { auth } = useAuth();
 
@@ -29,7 +30,9 @@ function App() {
             element={
               <ProtectedRoute>
                 <DictionaryProvider>
-                  <Dashboard />
+                  <ModProvider>
+                    <Dashboard />
+                  </ModProvider>
                 </DictionaryProvider>
               </ProtectedRoute>
             }
