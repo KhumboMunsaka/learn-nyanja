@@ -21,16 +21,26 @@ function Dictionary() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedWord, setSelectedWord] = useState(null);
   const [getMeaning, setGetMeaning] = useState(false);
-
+  const [inEnglish, setInEnglish] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
 
   useEffect(() => {
-    const newFilteredWords = allWords.filter((word) =>
-      word.word.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredWords(newFilteredWords);
-  }, [searchQuery, allWords, setFilteredWords]);
+    if (!inEnglish) {
+      const newFilteredWords = allWords.filter((word) =>
+        word.word.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredWords(newFilteredWords);
+    } else {
+      const newFilteredWords = allWords.filter((word) =>
+        word.meanings.some((meaning) =>
+          meaning.translation.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+      setFilteredWords(newFilteredWords);
+      console.log(newFilteredWords);
+    }
+  }, [searchQuery, allWords, setFilteredWords, inEnglish]);
 
   async function handleSave(word) {
     const savedWordsRef = await setDoc(doc(db, "user-faves", user.uid), {
@@ -74,6 +84,13 @@ function Dictionary() {
 
   return (
     <div>
+      <label htmlFor="">In Nyanja</label>
+      <input
+        type="checkbox"
+        name=""
+        id=""
+        onChange={() => setInEnglish(!inEnglish)}
+      />
       <label htmlFor="">Search for words</label>
       <input
         type="text"
