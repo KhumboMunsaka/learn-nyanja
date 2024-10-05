@@ -13,12 +13,11 @@ export const ModProvider = ({ children }) => {
 
     getDownloadURL(fileRef)
       .then((url) => {
-        console.log("i called the meme");
         setMemeOfTheDay(url); // Save the URL in state
         console.log("Meme of the Day URL:", url); // Log the URL
       })
       .catch((error) => {
-        console.error("Error fetching meme of the day:", error);
+        console.log("Error fetching meme of the day:");
       });
   }, []);
 
