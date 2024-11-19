@@ -6,27 +6,33 @@
 .container {
   width: 100%;
 }
+
 .dashboard {
   display: flex;
   width: 100%;
   justify-content: center;
+  align-items: center;
 }
+
 .mainContent {
   display: flex;
   width: 80%;
-
   /* justify-content: space-between; */
 }
+
 main {
   /* background-color: red; */
   padding: 2rem;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
   .dashboard {
     flex-direction: column-reverse;
   }
 }
 
 @media only screen and (min-width: 800px) {
+  .mainContent {
+    height: 80vh;
+  }
 }

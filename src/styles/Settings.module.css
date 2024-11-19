@@ -1,10 +1,82 @@
+/* Base Styles - Mobile First */
 .email,
 .username {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .UpdateForm {
-  max-width: 16rem;
-  width: 1600px;
+  max-width: 20rem; /* Better sizing for small screens */
+  margin: 0 auto; /* Center align the form */
+  padding: 1rem;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.container label {
+  font-size: 1rem; /* Clear and readable labels */
+  margin-bottom: 0.5rem;
+}
+
+.UpdateForm input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.UpdateForm input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.email button,
+.username button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.email button:hover,
+.username button:hover {
+  background-color: #0056b3;
+}
+.settings {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+/* Responsive Styles for Larger Screens */
+@media only screen and (min-width: 1000px) {
+  .UpdateForm {
+    max-width: 40rem; /* Wider form for larger screens */
+    padding: 2rem;
+  }
+
+  .email,
+  .username {
+    flex-direction: row; /* Side-by-side fields */
+    align-items: center;
+    gap: 1rem; /* Space between label and input */
+  }
+
+  .UpdateForm label {
+    flex: 0 0 6rem; /* Fixed width for labels */
+    text-align: right;
+  }
+
+  .UpdateForm input {
+    flex: 1; /* Expand input fields to fill available space */
+  }
+
+  .UpdateForm button {
+    align-self: flex-start; /* Align button to the top */
+  }
 }

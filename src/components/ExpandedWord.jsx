@@ -3,7 +3,7 @@ import { db } from "../firebase/firebase.config";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-
+import styles from "../styles/ExpandedWord.module.css";
 function ExpandedWord({ selectedWord, handleSave, setGetMeaning }) {
   const [isAlreadySaved, setIsAlreadySaved] = useState(true);
   const [audioURL, setAudioURL] = useState(null);
@@ -57,18 +57,22 @@ function ExpandedWord({ selectedWord, handleSave, setGetMeaning }) {
   }, [selectedWord]);
 
   return (
-    <div>
-      {selectedWord?.word}
+    <div className={styles.container}>
+      <h3 className={styles.expandedWord}>{selectedWord?.word}</h3>
       {selectedWord?.meanings.map((meaning, index) => (
-        <p key={index}>
+        <p key={index} className={styles.wordMeaning}>
           {index + 1}. {meaning.translation}
         </p>
       ))}
-      {!isAlreadySaved && (
-        <button onClick={() => handleSave(selectedWord)}>Save This Word</button>
-      )}
-      {audioURL && <audio src={audioURL} controls />}
-      <button onClick={() => setGetMeaning(false)}>Back</button>
+      <div className={styles.audioContainer}>
+        {!isAlreadySaved && (
+          <button onClick={() => handleSave(selectedWord)}>
+            Save This Word
+          </button>
+        )}
+        {audioURL && <audio src={audioURL} controls />}
+        <button onClick={() => setGetMeaning(false)}>Back</button>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import {
   getAuth,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../styles/Login.module.css";
 function Login() {
   const auth = getAuth();
@@ -20,15 +20,10 @@ function Login() {
     e.preventDefault();
     setErrorMessage(null);
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-
-        // ...
+      .then(() => {
         navigate("/dashboard", { replace: true });
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage(errorMessage);
       });
@@ -41,7 +36,6 @@ function Login() {
         setResetMessage("Password reset email sent!");
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         setResetMessage(errorMessage);
         // ..

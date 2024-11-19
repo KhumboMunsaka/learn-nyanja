@@ -1,13 +1,25 @@
+import styles from "../styles/SavedWords.module.css";
+
 function SavedWords({ onHandleExpand, savedWords, handleRemoveWord }) {
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Saved Words 🔒</h2>
       <div>
         {savedWords.map((word, index) => (
-          <li key={index} style={{ display: "flex", overflowY: "none" }}>
-            <p onClick={() => onHandleExpand(word)}>- {word.word}: </p>
-            <p> {word.meanings[0]?.translation} </p>
-            <span onClick={() => handleRemoveWord(index)}>remove word</span>
+          <li
+            key={index}
+            style={{ display: "flex", overflowY: "none" }}
+            className={styles.word}
+          >
+            <div>
+              <div className={styles.wordText}>
+                <h4 onClick={() => onHandleExpand(word)}>- {word.word}: </h4>
+                <p> {word.meanings[0]?.translation} </p>
+              </div>
+              <span onClick={() => handleRemoveWord(index)}>
+                Remove word 🗑️
+              </span>
+            </div>
           </li>
         ))}
       </div>

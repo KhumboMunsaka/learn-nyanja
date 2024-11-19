@@ -2,16 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, updateProfile } from "firebase/auth";
 import { uploadImage } from "../firebase/storage";
-import { useAuth } from "../firebase/auth";
 
 function useUpdateProfile() {
   const [username, setUsername] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [photoURL, setPhotoURL] = useState("");
 
   const navigate = useNavigate();
-  const { authUser } = useAuth();
   const auth = getAuth();
   const user = auth.currentUser;
 

@@ -41,6 +41,7 @@ function Settings() {
   }
   return (
     <div>
+      <h2 className={styles.settings}>Settings</h2>
       <form action="" className={styles.UpdateForm}>
         <div className={styles.username}>
           <label>Username:</label>

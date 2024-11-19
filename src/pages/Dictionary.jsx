@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import WordList from "../components/WordList";
 import ExpandedWord from "../components/ExpandedWord";
@@ -85,7 +85,7 @@ function Dictionary() {
   return (
     <div className={styles.container}>
       <div className={styles.targetLanguage}>
-        <label htmlFor="">In Nyanja</label>
+        <label htmlFor="">In Nyanja?</label>
         <input
           type="checkbox"
           name=""
@@ -94,8 +94,10 @@ function Dictionary() {
           onChange={() => setInEnglish(!inEnglish)}
         />
       </div>
-      <label htmlFor="">
-        {searchQuery == "" ? null : (
+      <label htmlFor="" className={styles.informUser}>
+        {searchQuery == "" ? (
+          <p>Search the Dictionary For The Word You Want To Know</p>
+        ) : (
           <>
             {!inEnglish ? (
               <p>
@@ -115,11 +117,12 @@ function Dictionary() {
         type="text"
         value={searchQuery}
         onFocus={() => setGetMeaning(false)}
+        placeholder="Search"
         className={styles.searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <div className={styles.wordList}>
+      <section className={styles.wordList}>
         {!getMeaning ? (
           <WordList filteredWords={filteredWords} expandWord={expandWord} />
         ) : (
@@ -136,7 +139,7 @@ function Dictionary() {
           savedWords={savedWords}
           handleRemoveWord={handleRemoveWord}
         />
-      </div>
+      </section>
     </div>
   );
 }

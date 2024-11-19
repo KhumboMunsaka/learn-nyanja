@@ -1,35 +1,27 @@
 import { useState } from "react";
 import Button from "../components/Button";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Message from "../components/Message";
-import { useAuth } from "../firebase/auth";
 import styles from "../styles/SignUp.module.css";
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const provider = useAuth();
 
   function handleSubmit(e) {
     e.preventDefault();
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed up
-        const user = userCredential.user;
         console.log("success");
         // ...
         navigate("/update-profile");
       })
 
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         setError(errorMessage);
         // ..
