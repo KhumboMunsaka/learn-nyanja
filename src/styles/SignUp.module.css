@@ -1,0 +1,20 @@
+.signUpForm label {
+  font-size: 2.5em;
+  font-weight: 500;
+}
+.signUpForm input {
+  padding: 0.5em;
+}
+.signUpForm div {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+.signUpForm button {
+  background-color: #5865f2;
+  padding: 1em;
+  border-radius: 20px;
+  border: none;
+  font-size: 1.3em;
+  font-weight: 600;
+}

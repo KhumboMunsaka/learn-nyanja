@@ -7,6 +7,7 @@ import useUpdateProfile from "../hooks/UpdateProfileLogic";
 import Button from "../components/Button";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase/firebase.config";
+import styles from "../styles/Dashboard.module.css";
 
 function Dashboard() {
   const auth = getAuth();
@@ -47,10 +48,10 @@ function Dashboard() {
   }
   return (
     //Render form to update information in case there is not username
-    <section>
+    <main className={styles.container}>
       {user?.displayName != null ? (
         <>
-          <p>Welcome {user.displayName}</p>
+          <p className={styles.displayName}>Welcome {user.displayName}</p>
           {profilePicUrl && (
             <img
               src={profilePicUrl}
@@ -58,8 +59,12 @@ function Dashboard() {
               style={{ width: "50px", height: "auto", borderRadius: "360%" }}
             />
           )}
-          <PageNavigation />
-          <Outlet />
+          <section className={styles.dashboard}>
+            <PageNavigation className={styles.navbar} />
+            <div className={styles.mainContent}>
+              <Outlet />
+            </div>
+          </section>
           <button onClick={handleSignOut}>Log Out 💨</button>
         </>
       ) : (
@@ -98,7 +103,7 @@ function Dashboard() {
           </form>
         </>
       )}
-    </section>
+    </main>
   );
 }
 

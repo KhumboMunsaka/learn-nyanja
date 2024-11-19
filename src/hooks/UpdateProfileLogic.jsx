@@ -9,6 +9,7 @@ function useUpdateProfile() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [photoURL, setPhotoURL] = useState("");
+
   const navigate = useNavigate();
   const { authUser } = useAuth();
   const auth = getAuth();
@@ -27,17 +28,28 @@ function useUpdateProfile() {
   const handleUsernameChange = (name) => {
     setUsername(name);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate that the username is not empty
+    if (!username.trim()) {
+      console.error("Error: Username cannot be empty.");
+      return; // Stop the submission process
+    }
+
     setIsSubmitting(true);
     try {
       const imageURL = selectedFile
         ? await uploadImage(selectedFile, user.uid)
         : null;
+
+      // Update the profile in Firebase
       await updateProfile(auth.currentUser, {
         displayName: username,
         photoURL: imageURL,
       });
+
       setIsSubmitting(false);
       navigate("/dashboard");
     } catch (error) {
@@ -57,6 +69,8 @@ function useUpdateProfile() {
   };
 }
 
+export default useUpdateProfile;
+
 //Old logic
 // async function handleSubmit(e) {
 //     setIsSubmitting(true);
@@ -75,5 +89,3 @@ function useUpdateProfile() {
 //       console.log("It has failed");
 //     }
 //   }
-
-export default useUpdateProfile;

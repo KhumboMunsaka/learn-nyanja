@@ -7,7 +7,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase/firebase.config";
 import DictionaryContext from "../contexts/DictionaryContext";
-
+import styles from "../styles/Dictionary.module.css";
 function Dictionary() {
   const {
     allWords,
@@ -83,38 +83,60 @@ function Dictionary() {
   }
 
   return (
-    <div>
-      <label htmlFor="">In Nyanja</label>
-      <input
-        type="checkbox"
-        name=""
-        id=""
-        onChange={() => setInEnglish(!inEnglish)}
-      />
-      <label htmlFor="">Search for words</label>
+    <div className={styles.container}>
+      <div className={styles.targetLanguage}>
+        <label htmlFor="">In Nyanja</label>
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          className={styles.checkbox}
+          onChange={() => setInEnglish(!inEnglish)}
+        />
+      </div>
+      <label htmlFor="">
+        {searchQuery == "" ? null : (
+          <>
+            {!inEnglish ? (
+              <p>
+                You are searching for the meaning of {searchQuery} in English
+              </p>
+            ) : (
+              <p>
+                <p>
+                  You are searching for the meaning of {searchQuery} in Nyanja
+                </p>
+              </p>
+            )}
+          </>
+        )}
+      </label>
       <input
         type="text"
         value={searchQuery}
         onFocus={() => setGetMeaning(false)}
+        className={styles.searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      {!getMeaning ? (
-        <WordList filteredWords={filteredWords} expandWord={expandWord} />
-      ) : (
-        <ExpandedWord
-          handleSave={handleSave}
-          selectedWord={selectedWord}
-          setGetMeaning={setGetMeaning}
-          userID={user.uid}
-        />
-      )}
+      <div className={styles.wordList}>
+        {!getMeaning ? (
+          <WordList filteredWords={filteredWords} expandWord={expandWord} />
+        ) : (
+          <ExpandedWord
+            handleSave={handleSave}
+            selectedWord={selectedWord}
+            setGetMeaning={setGetMeaning}
+            userID={user.uid}
+          />
+        )}
 
-      <SavedWords
-        onHandleExpand={expandWord}
-        savedWords={savedWords}
-        handleRemoveWord={handleRemoveWord}
-      />
+        <SavedWords
+          onHandleExpand={expandWord}
+          savedWords={savedWords}
+          handleRemoveWord={handleRemoveWord}
+        />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,21 @@
+.container {
+  padding: 2em;
+}
+
+.container label {
+  font-size: 2rem;
+}
+
+.checkbox {
+  width: 40px;
+  height: 20px;
+}
+.targetLanguage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchQuery {
+  font-size: 1.2rem;
+  width: 100%;
+}

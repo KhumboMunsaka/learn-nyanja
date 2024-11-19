@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import {
   getAuth,
@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
-
+import styles from "../styles/Login.module.css";
 function Login() {
   const auth = getAuth();
   const [email, setEmail] = useState("");
@@ -52,20 +52,21 @@ function Login() {
     <>
       {!resetEmail ? (
         <div>
-          <form onSubmit={HandleSubmit}>
+          <form onSubmit={HandleSubmit} className={styles.loginForm}>
             <p>{errorMessage}</p>
             <div>
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="email">Email address ✉️</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={email}
+                placeholder="Enter Your Email"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Password 🔐</label>
               <input
                 type="password"
                 id="password"
@@ -76,16 +77,22 @@ function Login() {
               />
             </div>
             <div>
-              <Button>Login</Button>
+              <Button>Login 🔓</Button>
+            </div>
+            <div className={styles.backAndReset}>
+              <Button
+                onClick={() => setResetEmail(true)}
+                className={styles.forgotPassword}
+              >
+                Forgotten Password? 🤯
+              </Button>
+              <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
           </form>
-          <button onClick={() => setResetEmail(true)}>
-            Forgotten Password?
-          </button>
         </div>
       ) : (
         <div>
-          <form onSubmit={handleForgotSubmit}>
+          <form onSubmit={handleForgotSubmit} className={styles.loginForm}>
             <p>{resetMessage}</p>
             <div>
               <label htmlFor="email">Email address</label>
@@ -94,6 +101,7 @@ function Login() {
                 id="email"
                 name="email"
                 value={email}
+                placeholder="Enter Your Email"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>

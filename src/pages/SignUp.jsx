@@ -8,7 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Message from "../components/Message";
 import { useAuth } from "../firebase/auth";
-
+import styles from "../styles/SignUp.module.css";
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,27 +34,26 @@ function SignUp() {
         setError(errorMessage);
         // ..
       });
-
-    // Handle form submission logic
   }
 
   return (
     <div>
       {error || <Message message={error} />}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.signUpForm}>
         <div>
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">Email address ✉️</label>
           <input
             type="email"
             id="email"
             name="email"
             value={email}
+            placeholder="Enter Your Email Address"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Password 🔐</label>
           <input
             type="password"
             id="password"
@@ -65,7 +64,13 @@ function SignUp() {
           />
         </div>
         <div>
-          <Button>Sign Up</Button>
+          <button>Sign Up 📨</button>
+          <Button
+            onClick={() => navigate(-1)}
+            className={styles.forgotPassword}
+          >
+            Back
+          </Button>
         </div>
       </form>
     </div>

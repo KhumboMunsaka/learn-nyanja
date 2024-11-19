@@ -1,0 +1,26 @@
+.loginForm label {
+  font-size: 2.5em;
+  font-weight: 500;
+}
+form {
+  padding: 0.5em;
+}
+.loginForm input,
+.forgotPassword {
+  padding: 0.5em;
+}
+.loginForm div {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+.loginForm button,
+.forgotPassword {
+  margin-top: 1em;
+  background-color: #5865f2;
+  padding: 1em;
+  border-radius: 20px;
+  border: none;
+  font-size: 1.3em;
+  font-weight: 600;
+}

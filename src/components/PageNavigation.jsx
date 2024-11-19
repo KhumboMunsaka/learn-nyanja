@@ -1,19 +1,28 @@
 import { NavLink } from "react-router-dom";
+import styles from "../styles/PageNavigation.module.css";
 
 function PageNavigation() {
   return (
-    <ul>
+    <ul className={styles.links}>
       <li>
-        <NavLink to="learn"> 🥸 Learn</NavLink>
+        <NavLink to="learn" className={styles.link}>
+          🥸 Learn
+        </NavLink>
       </li>
       <li>
-        <NavLink to="mod"> 💀 MOD</NavLink>
+        <NavLink to="mod" className={styles.link}>
+          💀 MOD
+        </NavLink>
       </li>
       <li>
-        <NavLink to="dictionary"> 📖 Dictionary</NavLink>
+        <NavLink to="dictionary" className={styles.link}>
+          📖 Dictionary
+        </NavLink>
       </li>
       <li>
-        <NavLink to="settings"> ⚙️ Settings</NavLink>
+        <NavLink to="settings" className={styles.link}>
+          ⚙️ Settings
+        </NavLink>
       </li>
     </ul>
   );

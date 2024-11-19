@@ -1,0 +1,10 @@
+.email,
+.username {
+  display: flex;
+  flex-direction: column;
+}
+
+.UpdateForm {
+  max-width: 16rem;
+  width: 1600px;
+}

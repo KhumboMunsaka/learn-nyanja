@@ -1,0 +1,10 @@
+.word {
+}
+
+.container h2 {
+  font-size: 3rem;
+}
+.meanings {
+  font-style: italic;
+  font-size: 1.5rem;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getAuth, updateEmail, updateProfile } from "firebase/auth";
-
+import styles from "../styles/Settings.module.css";
 function Settings() {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -41,8 +41,8 @@ function Settings() {
   }
   return (
     <div>
-      <form action="">
-        <div>
+      <form action="" className={styles.UpdateForm}>
+        <div className={styles.username}>
           <label>Username:</label>
           <input
             value={username}
@@ -50,7 +50,7 @@ function Settings() {
           />
           <button onClick={handleUpdateUsername}>Update Username 😎</button>
         </div>
-        <div>
+        <div className={styles.email}>
           <label>Email:</label>
           <input value={email} onChange={(e) => setEmail(e.target.value)} />
           <button onClick={handleUpdateEmail}>Update Email 📨</button>
