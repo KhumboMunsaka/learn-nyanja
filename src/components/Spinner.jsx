@@ -1,13 +1,15 @@
-import { OrbitProgress } from "react-loading-indicators";
-
+import { ThreeDots } from "react-loader-spinner";
 function Spinner() {
   return (
-    <OrbitProgress
-      variant="disc"
-      color="#37cc31"
-      size="medium"
-      text=""
-      textColor=""
+    <ThreeDots
+      visible={true}
+      height="20"
+      width="20"
+      color="#fff"
+      radius="9"
+      ariaLabel="three-dots-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
     />
   );
 }

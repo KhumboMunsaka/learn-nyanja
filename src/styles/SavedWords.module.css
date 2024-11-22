@@ -1,49 +1,27 @@
 .container h2 {
-  font-size: 1.5rem;
+  color: white;
+  font-size: 1.8rem;
 }
 
-.word {
-  font-style: italic;
-  font-size: 1rem;
-  margin-bottom: 1em;
-}
-.wordText {
-  margin-bottom: 1em;
-}
-
-.word span {
-  font-style: normal;
-  font-weight: bold;
-  background-color: rgba(71, 82, 198, 1); /* Fully opaque background */
+.savedWord span {
+  background-color: #ff4b4b;
   padding: 0.5rem;
   border-radius: 15px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
 }
-
-.word span:hover {
-  background-color: rgb(86, 99, 236); /* Reduced opacity on hover */
+.savedWord span:hover {
+  background-color: #b93636;
 }
-
-@media only screen and (min-width: 1000px) {
-  .wordText {
-    margin-bottom: 1em;
-  }
-  .word {
-    font-style: italic;
-    font-size: 1.5rem;
-    margin-bottom: 1em;
-  }
-  .container h2 {
-    font-size: 3rem;
-  }
-  .container {
-    margin-left: 1rem;
-  }
-
-  .word span {
-    font-style: normal;
-    font-weight: bold;
-    background-color: rgba(71, 82, 198, 1); /* Fully opaque background */
-    padding: 0.5rem;
-    border-radius: 15px;
-  }
+.wordText {
+  margin: 1rem 0rem;
+}
+.wordText h4 {
+  font-size: 1.2rem;
+}
+.wordText h4,
+.wordText p {
+  color: white;
 }

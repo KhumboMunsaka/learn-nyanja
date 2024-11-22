@@ -50,23 +50,25 @@ function Dashboard() {
     //Render form to update information in case there is not username
     <main className={styles.container}>
       {user?.displayName != null ? (
-        <>
-          <p className={styles.displayName}>Welcome {user.displayName}</p>
-          {profilePicUrl && (
-            <img
-              src={profilePicUrl}
-              alt="profile picture"
-              style={{ width: "50px", height: "auto", borderRadius: "360%" }}
-            />
-          )}
+        <div className={styles.dashboardContainer}>
+          <div className={styles.userDetails}>
+            <p className={styles.displayName}>Welcome {user.displayName}</p>
+            {profilePicUrl && (
+              <img
+                src={profilePicUrl}
+                alt="profile picture"
+                style={{ width: "50px", height: "auto", borderRadius: "360%" }}
+              />
+            )}
+            <button onClick={handleSignOut}>Log Out 💨</button>
+          </div>
           <section className={styles.dashboard}>
             <PageNavigation className={styles.navbar} />
             <div className={styles.mainContent}>
               <Outlet />
             </div>
           </section>
-          <button onClick={handleSignOut}>Log Out 💨</button>
-        </>
+        </div>
       ) : (
         <>
           <h3>

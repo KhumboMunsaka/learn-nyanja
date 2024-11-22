@@ -11,7 +11,7 @@ function SavedWords({ onHandleExpand, savedWords, handleRemoveWord }) {
             style={{ display: "flex", overflowY: "none" }}
             className={styles.word}
           >
-            <div>
+            <div className={styles.savedWord}>
               <div className={styles.wordText}>
                 <h4 onClick={() => onHandleExpand(word)}>- {word.word}: </h4>
                 <p> {word.meanings[0]?.translation} </p>

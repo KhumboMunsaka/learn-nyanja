@@ -1,38 +1,45 @@
 .container {
-  padding: 2em;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
 }
-
-.container label {
-  font-size: 2rem;
+.targetLanguage label,
+.informUser {
+  color: white;
+  font-size: large;
+  font-weight: bold;
 }
-
-.checkbox {
+.targetLanguage input {
+  height: 15px;
   width: 30px;
-  height: 30px;
-  margin-left: 0.5rem;
-}
-.targetLanguage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem;
 }
 .searchQuery {
-  font-size: 1.2rem;
   width: 100%;
-  padding: 0.3rem;
+  max-width: 300px;
+  padding: 0.75rem;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a1a2e;
+  border: 2px solid #1cb0f6;
+  outline: transparent;
+  transition: all 0.3s ease;
 }
-.informUser p {
-  font-size: 1rem;
+.searchQuery:focus {
+  border-color: #1cb0f6;
+  box-shadow: 0 0 1px 1px rgba(28, 176, 246, 0.8),
+    0 0 20px 6px rgba(28, 176, 246, 0.5);
 }
 
-@media only screen and (min-width: 900px) {
+@media (min-width: 900px) {
   .wordList {
-    display: flex;
-    justify-content: space-between;
-    padding: 3rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
   }
-  .container section {
-    width: 60vw;
+  .targetLanguage label,
+  .informUser {
+    color: white;
+    font-size: 2rem;
   }
 }

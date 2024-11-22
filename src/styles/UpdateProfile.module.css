@@ -1,5 +1,5 @@
 /* General container styling */
-
+/* 
 .container {
   display: flex;
   flex-direction: column;
@@ -8,17 +8,17 @@
   justify-content: center;
   background-color: #f4f4f9;
   padding: 2rem;
-}
+} */
 
 /* Form styling */
-form {
+/* form {
   border-radius: 10px;
   box-shadow: 4px 4px 4px 4px#5865f2;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
+} */
 
 /* Heading */
 .welcome {
@@ -29,16 +29,16 @@ form {
 }
 
 /* Label styling */
-form label {
+/* form label {
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
   display: block;
   color: #555;
-}
+} */
 
 /* Input styling */
-form input[type="text"],
+/* form input[type="text"],
 form input[type="file"] {
   width: 100%;
   padding: 0.8rem;
@@ -53,10 +53,10 @@ form input[type="text"]:focus,
 form input[type="file"]:focus {
   border-color: #5865f2;
   outline: none;
-}
+} */
 
 /* Button styling */
-form button {
+/* form button {
   background-color: #5865f2;
   color: white;
   border: none;
@@ -66,20 +66,20 @@ form button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
+} */
 
-form button:disabled {
+/* form button:disabled {
   background-color: #a3a7ff;
   cursor: not-allowed;
-}
-
+} */
+/* 
 form button:hover:not(:disabled) {
   background-color: #4855c7;
-}
+} */
 
 /* Container for spacing and alignment */
-.form-group {
+/* .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
+} */

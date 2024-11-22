@@ -1,26 +1,110 @@
-.loginForm label {
-  font-size: 2.5em;
-  font-weight: 500;
+.container,
+.resetContainer {
+  display: grid;
+  place-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 1rem;
+  color: white;
 }
-form {
-  padding: 0.5em;
+
+.email,
+.password,
+.backAndReset {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr;
 }
+
+.container label {
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+}
+
+.loginForm {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .loginForm input,
-.forgotPassword {
-  padding: 0.5em;
+.resetContainer input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1a1a2e;
+  border: 2px solid #1cb0f6;
+  outline: transparent; /* Removes the default outline */
+  transition: all 0.3s ease; /* Smooth transition effect */
 }
-.loginForm div {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1em;
+
+.loginForm input:focus,
+.resetContainer input:focus {
+  border-color: #1cb0f6;
+  box-shadow: 0 0 10px 3px rgba(28, 176, 246, 0.8),
+    0 0 20px 6px rgba(28, 176, 246, 0.5); /* Adds a glowing effect */
+  outline: none; /* Ensures no outline appears */
 }
-.loginForm button,
-.forgotPassword {
-  margin-top: 1em;
-  background-color: #5865f2;
-  padding: 1em;
-  border-radius: 20px;
+.resetContainer input {
+  margin-bottom: 1.5rem;
+}
+
+.container button,
+.Button,
+.resetContainer button {
+  background-color: #1cb0f6;
+  color: white;
+  font-size: 1.5rem;
+
+  padding: 0.75rem 1.5rem;
   border: none;
-  font-size: 1.3em;
-  font-weight: 600;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container button:hover,
+.Button:hover,
+.resetContainer button:hover {
+  background-color: #0099cc; /* Slightly darker color on hover */
+}
+
+.backAndReset button,
+.backAndReset .Button {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.container button:active,
+.Button:active {
+  background-color: #007bb2; /* Even darker color when active */
+}
+
+.container p {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .loginForm {
+    padding: 1.5rem;
+    font-size: 14px;
+  }
+
+  .loginForm input {
+    font-size: 14px;
+  }
+  .container button,
+  .Button {
+    font-size: 14px;
+  }
 }

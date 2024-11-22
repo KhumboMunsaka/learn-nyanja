@@ -3,7 +3,7 @@ import Dashboard from "./Dashboard";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import styles from "../styles/Homepage.module.css";
 function Homepage() {
   const navigate = useNavigate();
   const auth = getAuth();
@@ -24,7 +24,11 @@ function Homepage() {
     return () => unsubscribe();
   }, [auth, navigate]);
 
-  return <div>{user == null ? <Authentication /> : <Dashboard />}</div>;
+  return (
+    <div className={styles.container}>
+      {user == null ? <Authentication /> : <Dashboard />}
+    </div>
+  );
 }
 
 export default Homepage;

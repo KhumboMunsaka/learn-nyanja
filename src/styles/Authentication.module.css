@@ -1,17 +1,11 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .welcomeScreen {
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+
+.welcomeScreen h1 {
+  color: white;
 }
 
 .navbar {
@@ -22,9 +16,10 @@ body {
 }
 .navbar li {
   margin-top: 1em;
-
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   list-style-type: none;
-  background-color: #5865f2;
+  background-color: #1cb0f6;
   padding: 1em;
   border-radius: 5%;
   border: none;
@@ -32,7 +27,7 @@ body {
   font-weight: 600;
 }
 .navbar li:hover {
-  background-color: #4752c6;
+  background-color: #1691ca;
 }
 
 .navbar a {
