@@ -1,0 +1,106 @@
+/* Mobile-first styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expandedWord {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  margin: 0;
+}
+
+.wordMeaning {
+  font-size: 1rem;
+  color: white;
+  text-align: left;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.audioContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.audioContainer button {
+  padding: 0.75rem 1.5rem;
+  background-color: #1cb0f6;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  width: fit-content;
+}
+
+.audioContainer button:hover {
+  background-color: #007bb2;
+}
+
+.audioContainer audio {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Tablet styling */
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .expandedWord {
+    font-size: 2rem;
+  }
+
+  .wordMeaning {
+    font-size: 1.2rem;
+  }
+
+  .audioContainer {
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .audioContainer button {
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+  }
+}
+
+/* Desktop styling */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .expandedWord {
+    font-size: 2.5rem;
+  }
+
+  .wordMeaning {
+    font-size: 1.3rem;
+  }
+
+  .audioContainer button {
+    font-size: 1.2rem;
+  }
+}

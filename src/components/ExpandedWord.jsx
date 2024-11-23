@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import styles from "../styles/ExpandedWord.module.css";
 function ExpandedWord({ selectedWord, handleSave, setGetMeaning }) {
-  const [isAlreadySaved, setIsAlreadySaved] = useState(true);
+  const [isAlreadySaved, setIsAlreadySaved] = useState(false);
   const [audioURL, setAudioURL] = useState(null);
   //To get the user's saved words
   useEffect(() => {

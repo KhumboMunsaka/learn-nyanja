@@ -2,7 +2,14 @@ import { createContext, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 const ModContext = createContext();
-const currentDate = new Date().toDateString();
+const currentDate = new Date()
+  .toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
+  .replace(/,/g, "");
 
 export const ModProvider = ({ children }) => {
   const [memeOfTheDay, setMemeOfTheDay] = useState(null);
@@ -18,6 +25,7 @@ export const ModProvider = ({ children }) => {
       })
       .catch((error) => {
         console.log("Error fetching meme of the day:");
+        console.log(error);
       });
   }, []);
 
