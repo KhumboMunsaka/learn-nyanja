@@ -1,5 +1,12 @@
 import { createContext, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 const ModContext = createContext();
 const currentDate = new Date()
@@ -13,24 +20,41 @@ const currentDate = new Date()
 
 export const ModProvider = ({ children }) => {
   const [memeOfTheDay, setMemeOfTheDay] = useState(null);
+  const [translationText, setTranslationText] = useState(null);
 
   useEffect(() => {
-    const storage = getStorage();
-    const fileRef = ref(storage, `mods/meme_of_the_day${currentDate}`);
+    const fetchMemeData = async () => {
+      try {
+        // Fetch the image URL from Firebase Storage
+        const storage = getStorage();
+        const fileRef = ref(storage, `mods/meme_of_the_day${currentDate}`);
+        const imageUrl = await getDownloadURL(fileRef);
+        setMemeOfTheDay(imageUrl);
 
-    getDownloadURL(fileRef)
-      .then((url) => {
-        setMemeOfTheDay(url); // Save the URL in state
-        console.log("Meme of the Day URL:", url); // Log the URL
-      })
-      .catch((error) => {
-        console.log("Error fetching meme of the day:");
-        console.log(error);
-      });
+        // Fetch the translation text from Firestore
+        const db = getFirestore();
+        const modsCollection = collection(db, "mods");
+        const q = query(modsCollection, where("memeDate", "==", currentDate));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((doc) => {
+            const { translation } = doc.data();
+            setTranslationText(translation);
+          });
+        } else {
+          console.log("No matching document for the current date");
+        }
+      } catch (error) {
+        console.error("Error fetching meme data:", error);
+      }
+    };
+
+    fetchMemeData();
   }, []);
 
   return (
-    <ModContext.Provider value={{ memeOfTheDay }}>
+    <ModContext.Provider value={{ memeOfTheDay, translationText }}>
       {children}
     </ModContext.Provider>
   );
