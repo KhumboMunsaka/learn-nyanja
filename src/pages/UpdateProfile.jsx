@@ -17,7 +17,8 @@ function UpdateProfile() {
     }
   }, [user, navigate]);
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     setIsLoading(true);
     setMessage("");
     updateProfile(auth.currentUser, {
@@ -33,6 +34,8 @@ function UpdateProfile() {
         setIsLoading(false);
       });
   }
+  console.log(user);
+  console.log(username);
   return (
     <div className={styles.container}>
       <h1>Set up your username. (This can be change later on)</h1>
