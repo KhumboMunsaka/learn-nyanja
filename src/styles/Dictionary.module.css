@@ -30,7 +30,9 @@
   box-shadow: 0 0 1px 1px rgba(28, 176, 246, 0.8),
     0 0 20px 6px rgba(28, 176, 246, 0.5);
 }
-
+.container p {
+  text-align: center;
+}
 @media (min-width: 900px) {
   .wordList {
     display: grid;
