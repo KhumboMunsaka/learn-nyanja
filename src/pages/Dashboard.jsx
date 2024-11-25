@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase/firebase.config";
 import styles from "../styles/Dashboard.module.css";
+import UpdateProfile from "./UpdateProfile";
 
 function Dashboard() {
   const auth = getAuth();
@@ -17,20 +18,6 @@ function Dashboard() {
   const { username, setUsername, isSubmitting, setSelectedFile, handleSubmit } =
     useUpdateProfile();
   const [profilePicUrl, setProfilePicUrl] = useState(null);
-
-  //Retrieve Profile Picture
-  useEffect(() => {
-    if (user && user.photoURL) {
-      const photoRef = ref(storage, user.photoURL);
-      getDownloadURL(photoRef)
-        .then((url) => {
-          setProfilePicUrl(url);
-        })
-        .catch((error) => {
-          console.error("Error fetching profile picture URL", error);
-        });
-    }
-  }, [user]);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -73,38 +60,7 @@ function Dashboard() {
         </div>
       ) : (
         <>
-          <h3>
-            Finish Setting up profile with your username and profile picture
-            (This can be changed later on)
-          </h3>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <label>Set Up Your Profile Picture:</label>
-              <input
-                label="Image"
-                placeholder="Choose image"
-                accept="image/png,image/jpeg"
-                type="file"
-                onChange={(e) => setSelectedFile(e.target.files[0])}
-              />
-            </div>
-
-            <div>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Updating..." : "Update Profile"}
-              </Button>
-            </div>
-          </form>
+          <UpdateProfile />
         </>
       )}
     </main>
