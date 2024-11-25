@@ -29,7 +29,6 @@ function Dashboard() {
         console.error("Sign out error", error);
       });
   };
-  console.log(user.displayName);
   if (isLoading) {
     return <p>Loading...</p>;
   }
