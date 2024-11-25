@@ -60,7 +60,9 @@ function Dashboard() {
                 style={{ width: "50px", height: "auto", borderRadius: "360%" }}
               />
             )}
-            <button onClick={handleSignOut}>Log Out 💨</button>
+            <button onClick={handleSignOut} className={styles.logOut}>
+              Log Out 💨
+            </button>
           </div>
           <section className={styles.dashboard}>
             <PageNavigation className={styles.navbar} />
