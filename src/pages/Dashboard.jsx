@@ -39,13 +39,7 @@ function Dashboard() {
         <div className={styles.dashboardContainer}>
           <div className={styles.userDetails}>
             <p className={styles.displayName}>Welcome {user.displayName}</p>
-            {profilePicUrl && (
-              <img
-                src={profilePicUrl}
-                alt="profile picture"
-                style={{ width: "50px", height: "auto", borderRadius: "360%" }}
-              />
-            )}
+
             <button onClick={handleSignOut} className={styles.logOut}>
               Log Out 💨
             </button>
