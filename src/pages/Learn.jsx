@@ -5,7 +5,6 @@ import styles from "../styles/Learn.module.css";
 import ExpandedSection from "../components/ExpandedSection";
 import Exercise from "../components/Exercise";
 import { QuizProvider, useQuiz } from "../contexts/QuizContext";
-
 function Learn() {
   const { loadExercises } = useQuiz();
   const [sections, setSections] = useState([]);
@@ -18,7 +17,8 @@ function Learn() {
   const [error, setError] = useState("");
   const [isDoingExercise, setIsDoingExercise] = useState(false);
   const [exercisePath, setExercisePath] = useState("");
-  // Fetch all sections
+  const [hideSections, setHideSections] = useState(false);
+
   useEffect(() => {
     async function fetchSections() {
       try {
@@ -40,10 +40,9 @@ function Learn() {
     fetchSections();
   }, []);
 
-  // Fetch lessons for a section
   const fetchLessons = async (section) => {
     if (lessons[section]) {
-      setExpandedSection(section === expandedSection ? "" : section); // Toggle section
+      setExpandedSection(section === expandedSection ? "" : section);
       return;
     }
 
@@ -68,10 +67,12 @@ function Learn() {
     setIsLoading(false);
   };
 
-  // Fetch lesson content
   const fetchLessonContent = async (section, lessonId) => {
+    const togglingOff = lessonId === expandedLesson;
+    setHideSections(!togglingOff);
+    setExpandedLesson(togglingOff ? "" : lessonId);
+
     if (lessonContent[lessonId]) {
-      setExpandedLesson(lessonId === expandedLesson ? "" : lessonId); // Toggle lesson
       return;
     }
 
@@ -86,7 +87,6 @@ function Learn() {
           ...prevContent,
           [lessonId]: data,
         }));
-        setExpandedLesson(lessonId);
       } else {
         setError("Lesson not found.");
       }
@@ -97,14 +97,9 @@ function Learn() {
     setIsLoading(false);
   };
 
-  // Fetch exercises for a lesson
-  // Fetch exercises for a lesson and pass the Firestore path
   const fetchExercises = (section, lessonId) => {
     setIsDoingExercise(true);
-
-    // Construct the Firestore path
     setExercisePath(`lessons/${section}/sublessons/${lessonId}/exercises`);
-    setIsDoingExercise(true);
   };
 
   return (
@@ -114,40 +109,39 @@ function Learn() {
 
         {!isDoingExercise ? (
           <div className={styles.sections}>
-            {sections.map((section) => (
-              <div key={section} className={styles.sectionItem}>
-                <button
-                  onClick={() => fetchLessons(section)}
-                  className={styles.sectionButton}
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </button>
+            {sections
+              .filter((section) => !hideSections || section === expandedSection)
+              .map((section) => (
+                <div key={section} className={styles.sectionItem}>
+                  <button
+                    onClick={() => fetchLessons(section)}
+                    className={styles.sectionButton}
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </button>
 
-                {expandedSection === section && lessons[section] && (
-                  <ExpandedSection
-                    lessons={lessons}
-                    section={section}
-                    fetchLessonContent={fetchLessonContent}
-                    expandedLesson={expandedLesson}
-                    lessonContent={lessonContent}
-                    fetchExercises={fetchExercises}
-                    exercises={exercises}
-                  />
-                )}
-              </div>
-            ))}
+                  {expandedSection === section && lessons[section] && (
+                    <ExpandedSection
+                      lessons={lessons}
+                      section={section}
+                      fetchLessonContent={fetchLessonContent}
+                      expandedLesson={expandedLesson}
+                      lessonContent={lessonContent}
+                      fetchExercises={fetchExercises}
+                      exercises={exercises}
+                    />
+                  )}
+                </div>
+              ))}
           </div>
         ) : (
-          <>
-            <Exercise
-              exercisesPath={exercisePath}
-              isDoingExercise={isDoingExercise}
-              setIsDoingExercise={setIsDoingExercise}
-            />
-          </>
+          <Exercise
+            exercisesPath={exercisePath}
+            isDoingExercise={isDoingExercise}
+            setIsDoingExercise={setIsDoingExercise}
+          />
         )}
 
-        {/* Loading and Error States */}
         {isLoading && <p>Loading...</p>}
         {error && <p className={styles.error}>{error}</p>}
       </div>
