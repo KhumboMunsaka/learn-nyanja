@@ -1,0 +1,106 @@
+/* General container for the exercise */
+.exerciseContainer {
+  padding: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+/* Title styling */
+.exerciseContainer h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+/* Styling for individual exercise cards */
+.exerciseCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Question styling */
+.question h4 {
+  font-size: 1rem;
+  color: white;
+
+  margin-bottom: 0.5rem;
+}
+
+/* Options list styling */
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.options li {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  color: white;
+
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.options li:hover {
+  background-color: #2bb2f2;
+}
+
+/* Buttons styling */
+.backButton {
+  background-color: #1cb0f6;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #0099cc;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Media queries for responsiveness */
+@media (min-width: 600px) {
+  .exerciseContainer {
+    padding: 2rem;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .exerciseContainer h2 {
+    font-size: 2rem;
+  }
+  .question h3 {
+    margin-top: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .options li {
+    padding: 0.75rem;
+  }
+
+  .backButton {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,24 @@
+.container {
+  color: white;
+}
+.lessonButton,
+.exerciseButton {
+  padding: 0.7rem;
+  border-radius: 15px;
+  margin: 1rem 0rem;
+  background-color: #1cb0f6;
+  color: white;
+  border: transparent;
+  font-size: 1rem;
+  transition: 3s 300ms ease;
+}
+.lessonButton:hover,
+.exerciseButton:hover {
+  background-color: #10678f;
+}
+.lessonContent h3 {
+  font-size: 1.8rem;
+}
+.lessonContent {
+  font-size: 1.5rem;
+}
