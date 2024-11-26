@@ -68,3 +68,9 @@
 .UpdateForm button:hover {
   background-color: #0099cc;
 }
+
+@media (max-width: 900px) {
+  .UpdateForm button {
+    font-size: 0.7rem;
+  }
+}

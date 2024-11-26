@@ -43,7 +43,7 @@
     display: grid;
     grid-template-columns: 0.5fr 3fr;
     padding: 1.5rem;
-    height: 80vh;
+    height: 75vh;
     width: 100%;
   }
 
