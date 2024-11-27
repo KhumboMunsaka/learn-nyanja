@@ -39,7 +39,6 @@ function Dictionary() {
       );
       setFilteredWords(newFilteredWords);
     }
-    console.log("Hi");
   }, [searchQuery, allWords, setFilteredWords, inEnglish]);
 
   async function handleSave(word) {

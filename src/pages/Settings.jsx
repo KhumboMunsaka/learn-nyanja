@@ -72,20 +72,6 @@ function Settings() {
             {!isLoading ? "Update Username 😎" : <Spinner />}
           </button>
         </div>
-        <div className={styles.email}>
-          <label>Email:</label>
-          <input
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setErrorMessage(null);
-              setSuccessMessage(null);
-            }}
-          />
-          <button onClick={handleUpdateEmail}>
-            {!isLoading ? "Update Email 📨" : <Spinner />}
-          </button>
-        </div>
       </form>
     </div>
   );

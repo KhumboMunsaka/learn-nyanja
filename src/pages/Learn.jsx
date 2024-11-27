@@ -4,9 +4,7 @@ import { db } from "../firebase/firebase.config";
 import styles from "../styles/Learn.module.css";
 import ExpandedSection from "../components/ExpandedSection";
 import Exercise from "../components/Exercise";
-import { QuizProvider, useQuiz } from "../contexts/QuizContext";
 function Learn() {
-  const { loadExercises } = useQuiz();
   const [sections, setSections] = useState([]);
   const [lessons, setLessons] = useState({});
   const [expandedSection, setExpandedSection] = useState("");
@@ -106,7 +104,7 @@ function Learn() {
     <>
       <div className={styles.container}>
         <h1>Learn Nyanja</h1>
-
+        <h3>{`Select a Section You'd like to learn`}</h3>
         {!isDoingExercise ? (
           <div className={styles.sections}>
             {sections

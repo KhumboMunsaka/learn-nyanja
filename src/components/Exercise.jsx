@@ -7,8 +7,9 @@ function Exercise({ exercisesPath, setIsDoingExercise, isDoingExercise }) {
   const [exercises, setExercises] = useState([]);
   const [feedback, setFeedback] = useState({}); // Feedback for specific questions
   const [answeredQuestions, setAnsweredQuestions] = useState({}); // Track answered questions
-
+  const [active, setIsActive] = useState(false);
   async function GetExercise() {
+    setIsActive(true);
     try {
       const querySnapshot = await getDocs(collection(db, exercisesPath));
       const fetchedExercises = querySnapshot.docs.map((doc) => ({
@@ -93,9 +94,12 @@ function Exercise({ exercisesPath, setIsDoingExercise, isDoingExercise }) {
         </div>
       ))}
       <div className={styles.buttons}>
-        <button onClick={GetExercise} className={styles.backButton}>
-          {isDoingExercise ? "Start Quiz" : "End Quiz"}
-        </button>
+        {active ? null : (
+          <button onClick={GetExercise} className={styles.backButton}>
+            Start Quiz
+          </button>
+        )}
+
         <button
           onClick={() => setIsDoingExercise(false)}
           className={styles.backButton}
