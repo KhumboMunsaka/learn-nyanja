@@ -8,6 +8,8 @@ function Exercise({ exercisesPath, setIsDoingExercise, isDoingExercise }) {
   const [feedback, setFeedback] = useState({}); // Feedback for specific questions
   const [answeredQuestions, setAnsweredQuestions] = useState({}); // Track answered questions
   const [active, setIsActive] = useState(false);
+
+  // Fetch exercises from Firebase
   async function GetExercise() {
     setIsActive(true);
     try {
@@ -16,7 +18,12 @@ function Exercise({ exercisesPath, setIsDoingExercise, isDoingExercise }) {
         id: doc.id,
         ...doc.data(),
       }));
-      setExercises(fetchedExercises);
+
+      if (fetchedExercises.length > 0) {
+        setExercises(fetchedExercises);
+      } else {
+        setExercises([]); // Ensure that exercises is an empty array if no exercises are found
+      }
     } catch (error) {
       console.error("Error fetching exercises:", error);
     }
@@ -37,64 +44,78 @@ function Exercise({ exercisesPath, setIsDoingExercise, isDoingExercise }) {
     }));
   }
 
+  useEffect(() => {
+    if (exercisesPath) {
+      GetExercise(); // Fetch exercises when the component is mounted or when exercisesPath changes
+    }
+  }, [exercisesPath]);
+
   return (
     <div className={styles.exerciseContainer}>
       <h2>Exercises</h2>
 
-      {exercises.map((exercise) => (
-        <div key={exercise.id} className={styles.exerciseCard}>
-          {exercise.questions?.map((question, questionIndex) => (
-            <div
-              key={questionIndex}
-              className={`${styles.question} ${
-                answeredQuestions[questionIndex] !== undefined
-                  ? styles.answered
-                  : ""
-              }`}
-            >
-              <h3>{question.question}</h3>
-              {question.options && (
-                <>
-                  {feedback[questionIndex] && (
-                    <div
-                      className={
-                        feedback[questionIndex].type === "success"
-                          ? styles.successFeedback
-                          : styles.errorFeedback
-                      }
-                    >
-                      {feedback[questionIndex].message}
-                    </div>
-                  )}
-                  <ul className={styles.options}>
-                    {question.options.map((option, optionIndex) => (
-                      <li
-                        key={optionIndex}
-                        onClick={() =>
-                          handleAnswer(
-                            optionIndex,
-                            question.correctOption,
-                            questionIndex
-                          )
+      {exercises.length === 0 ? (
+        <p style={{ fontSize: "1.2rem", textAlign: "center" }}>
+          There are no exercises available.
+        </p>
+      ) : (
+        exercises.map((exercise) => (
+          <div key={exercise.id} className={styles.exerciseCard}>
+            {exercise.questions?.map((question, questionIndex) => (
+              <div
+                key={questionIndex}
+                className={`${styles.question} ${
+                  answeredQuestions[questionIndex] !== undefined
+                    ? styles.answered
+                    : ""
+                }`}
+              >
+                <h3>{question.question}</h3>
+                {question.options && (
+                  <>
+                    {feedback[questionIndex] && (
+                      <div
+                        className={
+                          feedback[questionIndex].type === "success"
+                            ? styles.successFeedback
+                            : styles.errorFeedback
                         }
-                        className={`${styles.option} ${
-                          answeredQuestions[questionIndex] === optionIndex
-                            ? styles.selected
-                            : ""
-                        }`}
                       >
-                        {option}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      ))}
+                        {feedback[questionIndex].message}
+                      </div>
+                    )}
+                    <ul className={styles.options}>
+                      {question.options.map((option, optionIndex) => (
+                        <li
+                          key={optionIndex}
+                          onClick={() =>
+                            handleAnswer(
+                              optionIndex,
+                              question.correctOption,
+                              questionIndex
+                            )
+                          }
+                          className={`${styles.option} ${
+                            answeredQuestions[questionIndex] === optionIndex
+                              ? styles.selected
+                              : ""
+                          }`}
+                        >
+                          {option}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        ))
+      )}
+
       <div className={styles.buttons}>
-        {active ? null : (
+        {/* Only show Start Quiz if exercises exist */}
+        {exercises.length > 0 && !active && (
           <button onClick={GetExercise} className={styles.backButton}>
             Start Quiz
           </button>

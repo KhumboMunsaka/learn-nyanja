@@ -35,7 +35,7 @@ function ExpandedSection({
                 }}
                 className={styles.richTextContent}
               ></div>
-              {exercises[lesson.id] && (
+              {exercises[lesson.id] && exercises[lesson.id].length > 0 ? (
                 <div className={styles.exercises}>
                   <h4>Exercises:</h4>
                   {exercises[lesson.id].map((exercise) => (
@@ -44,6 +44,10 @@ function ExpandedSection({
                     </div>
                   ))}
                 </div>
+              ) : (
+                <p className={styles.noExercisesMessage}>
+                  No exercises are available for this lesson.
+                </p>
               )}
             </div>
           )}
