@@ -19,7 +19,12 @@ function ExpandedSection({
           >
             {lesson.title}
           </button>
-
+          <button
+            onClick={() => fetchExercises(section, lesson.id)}
+            className={styles.exerciseButton}
+          >
+            View Exercises
+          </button>
           {/* Display Lesson Content */}
           {expandedLesson === lesson.id && lessonContent[lesson.id] && (
             <div className={styles.lessonContent}>
@@ -30,14 +35,6 @@ function ExpandedSection({
                 }}
                 className={styles.richTextContent}
               ></div>
-
-              <button
-                onClick={() => fetchExercises(section, lesson.id)}
-                className={styles.exerciseButton}
-              >
-                View Exercises
-              </button>
-
               {exercises[lesson.id] && (
                 <div className={styles.exercises}>
                   <h4>Exercises:</h4>

@@ -4,6 +4,7 @@ import { db } from "../firebase/firebase.config";
 import styles from "../styles/Learn.module.css";
 import ExpandedSection from "../components/ExpandedSection";
 import Exercise from "../components/Exercise";
+
 function Learn() {
   const [sections, setSections] = useState([]);
   const [lessons, setLessons] = useState({});
@@ -15,7 +16,6 @@ function Learn() {
   const [error, setError] = useState("");
   const [isDoingExercise, setIsDoingExercise] = useState(false);
   const [exercisePath, setExercisePath] = useState("");
-  const [hideSections, setHideSections] = useState(false);
 
   useEffect(() => {
     async function fetchSections() {
@@ -39,17 +39,8 @@ function Learn() {
   }, []);
 
   const fetchLessons = async (section) => {
-    const togglingOff = section === expandedSection;
-
     if (lessons[section]) {
-      if (hideSections) {
-        // When only one section is visible (parent with sublessons),
-        // toggling it off should reveal all sections again.
-        setHideSections(!togglingOff);
-      } else {
-        // Toggle the section visibility normally.
-        setExpandedSection(togglingOff ? "" : section);
-      }
+      setExpandedSection(section === expandedSection ? "" : section);
       return;
     }
 
@@ -75,11 +66,8 @@ function Learn() {
   };
 
   const fetchLessonContent = async (section, lessonId) => {
-    const togglingOff = lessonId === expandedLesson;
-    setHideSections(!togglingOff);
-    setExpandedLesson(togglingOff ? "" : lessonId);
-
     if (lessonContent[lessonId]) {
+      setExpandedLesson(lessonId === expandedLesson ? "" : lessonId);
       return;
     }
 
@@ -94,6 +82,7 @@ function Learn() {
           ...prevContent,
           [lessonId]: data,
         }));
+        setExpandedLesson(lessonId);
       } else {
         setError("Lesson not found.");
       }
@@ -111,17 +100,17 @@ function Learn() {
 
   return (
     <>
+      <h1 className={styles.learnNyanja}>Learn Nyanja</h1>
       <div className={styles.container}>
-        <h1>Learn Nyanja</h1>
         {!isDoingExercise ? (
           <>
-            <h3>{`Select a Section You'd like to learn`}</h3>
-            <div className={styles.sections}>
-              {sections
-                .filter(
-                  (section) => !hideSections || section === expandedSection
-                )
-                .map((section) => (
+            {/* Sections container */}
+            <div>
+              <h3
+                className={styles.chooseSection}
+              >{`Select a Section You'd like to learn`}</h3>
+              <div className={styles.sections}>
+                {sections.map((section) => (
                   <div key={section} className={styles.sectionItem}>
                     <button
                       onClick={() => fetchLessons(section)}
@@ -129,20 +118,34 @@ function Learn() {
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
                     </button>
-
-                    {expandedSection === section && lessons[section] && (
-                      <ExpandedSection
-                        lessons={lessons}
-                        section={section}
-                        fetchLessonContent={fetchLessonContent}
-                        expandedLesson={expandedLesson}
-                        lessonContent={lessonContent}
-                        fetchExercises={fetchExercises}
-                        exercises={exercises}
-                      />
-                    )}
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Sublessons container */}
+            <div>
+              <div className={styles.sublessons}>
+                {expandedSection && lessons[expandedSection]?.length > 0 ? (
+                  <ExpandedSection
+                    lessons={lessons}
+                    section={expandedSection}
+                    fetchLessonContent={fetchLessonContent}
+                    expandedLesson={expandedLesson}
+                    lessonContent={lessonContent}
+                    fetchExercises={fetchExercises}
+                    exercises={exercises}
+                  />
+                ) : expandedSection ? (
+                  <p className={styles.noLessonsMessage}>
+                    No lessons available for this section.
+                  </p>
+                ) : (
+                  <p className={styles.noLessonsMessage}>
+                    Select a section to view its sublessons.
+                  </p>
+                )}
+              </div>
             </div>
           </>
         ) : (
