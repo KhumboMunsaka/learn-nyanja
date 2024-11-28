@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import PageNavigation from "../components/PageNavigation";
 import { useAuth } from "../firebase/auth";
 import { deleteUser, getAuth, signOut } from "firebase/auth";
 import useUpdateProfile from "../hooks/UpdateProfileLogic";
-import Button from "../components/Button";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../firebase/firebase.config";
 import styles from "../styles/Dashboard.module.css";
 import UpdateProfile from "./UpdateProfile";
-
+import { reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 function Dashboard() {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -30,13 +27,37 @@ function Dashboard() {
       });
   };
   function handleDelete() {
-    deleteUser(user)
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    // Prompt the user to re-enter their password (example for email/password authentication)
+    const password = prompt(
+      "Please confirm your password to delete your account:"
+    );
+    if (!password) {
+      console.log("Password is required for deletion");
+      return;
+    }
+
+    // Create credentials for reauthentication
+    const credential = EmailAuthProvider.credential(user.email, password);
+
+    // Reauthenticate user
+    reauthenticateWithCredential(user, credential)
       .then(() => {
-        // User deleted.
+        // Proceed with account deletion
+        deleteUser(user)
+          .then(() => {
+            console.log("Account deleted successfully.");
+            navigate("/"); // Navigate to home or any other page
+          })
+          .catch((error) => {
+            console.error("Error deleting user:", error);
+          });
       })
       .catch((error) => {
-        // An error ocurred
-        // ...
+        console.error("Reauthentication failed:", error);
+        alert("Reauthentication failed. Please try again.");
       });
   }
   if (isLoading) {
