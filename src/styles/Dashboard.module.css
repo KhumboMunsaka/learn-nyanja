@@ -5,7 +5,8 @@
   justify-content: space-between;
   min-height: 80vh;
 }
-.logOut {
+.logOut,
+.deleteButton {
   padding: 0.75rem 1.5rem;
   background-color: #1cb0f6;
   color: white;
@@ -20,6 +21,12 @@
 }
 .logOut:hover {
   background-color: #007bb2;
+}
+.deleteButton {
+  background-color: #ea4335;
+}
+.deleteButton:hover {
+  background-color: #671d17;
 }
 
 .userDetails {

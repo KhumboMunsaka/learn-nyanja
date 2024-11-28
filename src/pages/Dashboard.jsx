@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import PageNavigation from "../components/PageNavigation";
 import { useAuth } from "../firebase/auth";
-import { getAuth, signOut } from "firebase/auth";
+import { deleteUser, getAuth, signOut } from "firebase/auth";
 import useUpdateProfile from "../hooks/UpdateProfileLogic";
 import Button from "../components/Button";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -29,6 +29,16 @@ function Dashboard() {
         console.error("Sign out error", error);
       });
   };
+  function handleDelete() {
+    deleteUser(user)
+      .then(() => {
+        // User deleted.
+      })
+      .catch((error) => {
+        // An error ocurred
+        // ...
+      });
+  }
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -39,9 +49,11 @@ function Dashboard() {
         <div className={styles.dashboardContainer}>
           <div className={styles.userDetails}>
             <p className={styles.displayName}>Welcome {user.displayName}</p>
-
             <button onClick={handleSignOut} className={styles.logOut}>
               Log Out 💨
+            </button>{" "}
+            <button onClick={handleDelete} className={styles.deleteButton}>
+              Delete Account 🗑️
             </button>
           </div>
           <section className={styles.dashboard}>

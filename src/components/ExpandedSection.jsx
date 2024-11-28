@@ -44,11 +44,7 @@ function ExpandedSection({
                     </div>
                   ))}
                 </div>
-              ) : (
-                <p className={styles.noExercisesMessage}>
-                  No exercises are available for this lesson.
-                </p>
-              )}
+              ) : null}
             </div>
           )}
         </div>
