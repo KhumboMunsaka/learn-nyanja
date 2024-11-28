@@ -39,8 +39,17 @@ function Learn() {
   }, []);
 
   const fetchLessons = async (section) => {
+    const togglingOff = section === expandedSection;
+
     if (lessons[section]) {
-      setExpandedSection(section === expandedSection ? "" : section);
+      if (hideSections) {
+        // When only one section is visible (parent with sublessons),
+        // toggling it off should reveal all sections again.
+        setHideSections(!togglingOff);
+      } else {
+        // Toggle the section visibility normally.
+        setExpandedSection(togglingOff ? "" : section);
+      }
       return;
     }
 
@@ -104,34 +113,38 @@ function Learn() {
     <>
       <div className={styles.container}>
         <h1>Learn Nyanja</h1>
-        <h3>{`Select a Section You'd like to learn`}</h3>
         {!isDoingExercise ? (
-          <div className={styles.sections}>
-            {sections
-              .filter((section) => !hideSections || section === expandedSection)
-              .map((section) => (
-                <div key={section} className={styles.sectionItem}>
-                  <button
-                    onClick={() => fetchLessons(section)}
-                    className={styles.sectionButton}
-                  >
-                    {section.charAt(0).toUpperCase() + section.slice(1)}
-                  </button>
+          <>
+            <h3>{`Select a Section You'd like to learn`}</h3>
+            <div className={styles.sections}>
+              {sections
+                .filter(
+                  (section) => !hideSections || section === expandedSection
+                )
+                .map((section) => (
+                  <div key={section} className={styles.sectionItem}>
+                    <button
+                      onClick={() => fetchLessons(section)}
+                      className={styles.sectionButton}
+                    >
+                      {section.charAt(0).toUpperCase() + section.slice(1)}
+                    </button>
 
-                  {expandedSection === section && lessons[section] && (
-                    <ExpandedSection
-                      lessons={lessons}
-                      section={section}
-                      fetchLessonContent={fetchLessonContent}
-                      expandedLesson={expandedLesson}
-                      lessonContent={lessonContent}
-                      fetchExercises={fetchExercises}
-                      exercises={exercises}
-                    />
-                  )}
-                </div>
-              ))}
-          </div>
+                    {expandedSection === section && lessons[section] && (
+                      <ExpandedSection
+                        lessons={lessons}
+                        section={section}
+                        fetchLessonContent={fetchLessonContent}
+                        expandedLesson={expandedLesson}
+                        lessonContent={lessonContent}
+                        fetchExercises={fetchExercises}
+                        exercises={exercises}
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
+          </>
         ) : (
           <Exercise
             exercisesPath={exercisePath}

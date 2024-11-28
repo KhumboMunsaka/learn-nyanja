@@ -14,7 +14,6 @@ import UpdateProfile from "./pages/UpdateProfile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { DictionaryProvider } from "./contexts/DictionaryContext"; // Imp
 import { ModProvider } from "./contexts/MODContext";
-import { QuizProvider } from "./contexts/QuizContext";
 function App() {
   const { auth } = useAuth();
 
@@ -32,9 +31,7 @@ function App() {
               <ProtectedRoute>
                 <DictionaryProvider>
                   <ModProvider>
-                    <QuizProvider>
-                      <Dashboard />
-                    </QuizProvider>
+                    <Dashboard />
                   </ModProvider>
                 </DictionaryProvider>
               </ProtectedRoute>
