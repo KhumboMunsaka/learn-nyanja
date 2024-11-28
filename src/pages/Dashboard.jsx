@@ -35,7 +35,7 @@ function Dashboard() {
       "Please confirm your password to delete your account:"
     );
     if (!password) {
-      console.log("Password is required for deletion");
+      alert("Password is required for deletion");
       return;
     }
 
